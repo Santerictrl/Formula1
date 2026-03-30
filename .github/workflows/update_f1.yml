@@ -2,21 +2,23 @@ name: Update F1 Standings
 
 on:
   schedule:
-    # This runs every Monday at 8:00 AM UTC
-    - cron: '0 8 * * 1'
-  workflow_dispatch: # This allows you to run it manually with a button!
+    - cron: '0 8 * * 1' # Every Monday at 8 AM
+  workflow_dispatch:   # Allows manual testing
+
+permissions:
+  contents: write      # THIS FIXES ERROR 128 (Permission to save files)
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Upgraded from v3
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Upgraded from v4
         with:
-          python-version: '3.9'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: pip install requests
@@ -27,7 +29,7 @@ jobs:
       - name: Commit and Push changes
         run: |
           git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.name "github-actions[bot]"
           git add index.html
-          git commit -m "Updated F1 Standings [Automated]" || exit 0
+          git commit -m "Updated F1 Standings [Automated]" || echo "No changes to commit"
           git push
