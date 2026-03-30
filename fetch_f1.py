@@ -15,7 +15,7 @@ def update_dashboard():
         team = item['Constructors'][0]['name']
 
         # The row
-        html_rows += f"<tr><td>{pos}</td><td>{name}</td><td>{team}</td><td>{points}</td></tr>"
+        html_rows += f"<tr><td class='pos'>{pos}</td><td>{name}</td><td>{team}</td><td class='pts'>{points}</td></tr>\n"
 
     with open("index.html", "r") as f:
         content = f.read()
