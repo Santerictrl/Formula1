@@ -1,0 +1,33 @@
+name: Update F1 Standings
+
+on:
+  schedule:
+    # This runs every Monday at 8:00 AM UTC
+    - cron: '0 8 * * 1'
+  workflow_dispatch: # This allows you to run it manually with a button!
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Update Script
+        run: python fetch_f1.py
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add index.html
+          git commit -m "Updated F1 Standings [Automated]" || exit 0
+          git push
