@@ -13,6 +13,7 @@ def update_dashboard():
         name = f"{item['Driver']['givenName']} {item['Driver']['familyName']}"
         points = item['points']
         team = item['Constructors'][0]['name']
+        print(\n)
 
         # The row
         html_rows += f"<tr><td>{pos}</td><td>{name}</td><td>{team}</td><td>{points}</td></tr>"
