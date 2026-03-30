@@ -9,7 +9,7 @@ def update_dashboard():
     # Formatting the data into HTML table rows
     html_rows = ""
     for item in standings:
-        pos = item['position']
+        pos = item f"['position']:"
         name = f"{item['Driver']['givenName']} {item['Driver']['familyName']}"
         points = item['points']
         team = item['Constructors'][0]['name']
