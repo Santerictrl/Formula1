@@ -1,29 +1,33 @@
 import requests
 
 def update_dashboard():
-    # The URL for the 2026 Driver Standings
+    # 1. Get the data from the API
     url = "http://api.jolpi.ca/ergast/f1/2026/driverStandings.json"
-    response = requests.get(url).json()
-    standings = response['MRData']['StandingsTable']['StandingsLists'][0]['DriverStandings']
+    data = requests.get(url).json()
+    standings = data['MRData']['StandingsTable']['StandingsLists'][0]['DriverStandings']
 
-    # Formatting the data into HTML table rows
+    # 2. Build the rows
     html_rows = ""
     for item in standings:
         pos = item['position']
         name = f"{item['Driver']['givenName']} {item['Driver']['familyName']}"
-        points = item['points']
         team = item['Constructors'][0]['name']
+        points = item['points']
+        html_rows += f"<tr><td>{pos}</td><td>{name}</td><td>{team}</td><td>{points}</td></tr>\n"
 
-        # The row
-        html_rows += f"<tr><td class='pos'>{pos}</td><td>{name}</td><td>{team}</td><td class='pts'>{points}</td></tr>\n"
+    # 3. READ THE ENTIRE TEMPLATE FILE
+    # This keeps your CSS and HTML structure safe!
+    with open("template.html", "r") as f:
+        full_page_template = f.read()
 
-    with open("index.html", "r") as f:
-        content = f.read()
+    # 4. REPLACE THE PLACEHOLDER WITH THE ROWS
+    final_combined_html = full_page_template.replace("", html_rows)
 
-    update_content = content.replace("", html_rows)
-
+    # 5. SAVE THE WHOLE THING TO INDEX.HTML
     with open("index.html", "w") as f:
-        f.write(update_content)
+        f.write(final_combined_html)
+    
+    print("Dashboard rebuilt successfully!")
 
 if __name__ == "__main__":
     update_dashboard()
