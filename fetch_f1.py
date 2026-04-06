@@ -30,10 +30,16 @@ def update_dashboard():
 
     content = content.replace("", html_rows)
     
-    if next_race:
+if next_race:
         content = content.replace("", next_race['raceName'])
         content = content.replace("", next_race['date'])
-        # Creates a filename like 'miami.jpg' from the city name
+        
+        # New: Provide the ISO date for the JavaScript countdown
+        # API dates are 'YYYY-MM-DD', but we need to add the time
+        iso_date = f"{next_race['date']}T{next_race.get('time', '15:00:00Z')}"
+        content = content.replace("", iso_date)
+        
+        # Track Image
         city_image = next_race['Circuit']['Location']['locality'].lower() + ".jpg"
         content = content.replace("", city_image)
 
