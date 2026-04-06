@@ -30,6 +30,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "github-actions[bot]"
-          git add index.html
+          git add index.html style.css
+          git pull origin main --rebase
           git commit -m "Updated F1 Standings [Automated]" || echo "No changes to commit"
           git push
