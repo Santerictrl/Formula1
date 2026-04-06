@@ -6,7 +6,7 @@ on:
   workflow_dispatch:   # Allows manual testing
 
 permissions:
-  contents: write      # THIS FIXES ERROR 128 (Permission to save files)
+  contents: write      # THIS FIXES ERROR 128 (Permission to save files and)
 
 jobs:
   build:
