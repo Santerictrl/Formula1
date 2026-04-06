@@ -45,7 +45,7 @@ if next_race:
 
     # 4. Save to index.html
     with open("index.html", "w") as f:
-        f.write(content)
+        f.write(final_html)
     print("Dashboard fully updated with Next Race info!")
 
 if __name__ == "__main__":
